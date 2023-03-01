@@ -1,78 +1,102 @@
 # Weather App
 
-# Module 06 Mini-Project: Library of Congress Search Tool
+## Your Task
 
-In this activity, you will work with a group to build an application that searches and displays results from the Library of Congress API.
+Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Developers are often tasked with retrieving data from another application's API and using it in the context of their own. Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
 
-## Instructions
+Use the [5 Day Weather Forecast](https://openweathermap.org/forecast5) to retrieve weather data for cities. The base URL should look like the following: `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}`. After registering for a new API key, you may need to wait up to 2 hours for that API key to activate.
 
-The completed application should meet the following criteria:
+**Hint**: Using the 5 Day Weather Forecast API, you'll notice that you will need to pass in coordinates instead of just a city name. Using the OpenWeatherMap APIs, how could we retrieve geographical coordinates given a city name?
 
-* As a user, I can submit a search query from the application to request data and receive a response from the Library of Congress.
+You will use `localStorage` to store any persistent data. For more information on how to work with the OpenWeather API, refer to the [Full-Stack Blog on how to use API keys](https://coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys).
 
-* As a user, I can either perform a generic search for data in all formats or I can select a format in the form to help filter results.
+## User Story
 
-* As a user, I can see all of the results of my search displayed on a separate page.
+```
+AS A traveler
+I WANT to see the weather outlook for multiple cities
+SO THAT I can plan a trip accordingly
+```
 
-* As a user, I can conduct additional searches from the results page as well.
+## Acceptance Criteria
 
-To learn about how to use this API, check out the Requests section of the [Library of Congress API documentation](https://libraryofcongress.github.io/data-exploration/).
+```
+GIVEN a weather dashboard with form inputs
+WHEN I search for a city
+THEN I am presented with current and future conditions for that city and that city is added to the search history
+WHEN I view current weather conditions for that city
+THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
+WHEN I view future weather conditions for that city
+THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+WHEN I click on a city in the search history
+THEN I am again presented with current and future conditions for that city
+```
 
-### The Homepage
+## Mock-Up
 
-The homepage (`index.html`) should have the following:
+The following image shows the web application's appearance and functionality:
 
-* A simple, well thought-out UI.
+![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for Atlanta.](./Assets/06-server-side-apis-homework-demo.png)
 
-* A form with a text input field to capture a search query and an option select dropdown to capture the format of the search query. The options in the dropdown should be a list of the possible format values listed in the [Library of Congress API documentation on requests](https://libraryofcongress.github.io/data-exploration/requests.html#format).
+## Grading Requirements
 
-* A browser event listener attached to the form to execute a function on submission, which will capture both form values and redirect the user to a search results page with those values included in the URL as query parameters. This will use the browser's `location.replace()` method.
+> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
+>
+> * A repository that has no code
+>
+> * A repository that includes a unique name but nothing else
+>
+> * A repository that includes only a README file but nothing else
+>
+> * A repository that only includes starter code
 
-* If there is no format selected from the dropdown, the URL should look something like the following example:
+This Challenge is graded based on the following criteria: 
 
-  ```http
-  /search-results.html?q=dogs&format=
-  ```
+### Technical Acceptance Criteria: 40%
 
-* If there is a format selected from the dropdown, the URL should look something like the following example:
+* Satisfies all of the above acceptance criteria plus the following:
 
-  ```http
-  /search-results.html?q=dogs&format=photos
-  ```
+    * Uses the OpenWeather API to retrieve weather data.
 
-### The Search Results Page
+    * Uses `localStorage` to store persistent data.
 
-The search results page (`search-results.html`) should have and do the following:
+### Deployment: 32%
 
-* On page load, if there are query parameters, immediately parse them and use them in a request URL to fetch data from the Library of Congress API.
+* Application deployed at live URL.
 
-* If there is a value for the format query parameter, use the format endpoint to search for something based on the chosen format. For more information, see the [Library of Congress API documentation on the format endpoint](https://libraryofcongress.github.io/data-exploration/requests.html#format).
+* Application loads with no errors.
 
-* If there is no value for the format query parameter, use the search endpoint to search for all types of data. For more information, see the [Library of Congress API documentation on the search endpoint](https://libraryofcongress.github.io/data-exploration/requests.html#search).
+* Application GitHub URL submitted.
 
-* The response from the API request will then be displayed on the page. It is up to you and your team to determine which data should be displayed from the overall `response` object, but you must use data from the `results` property in the `response` object. For more information, see the [Library of Congress API documentation on responses](https://libraryofcongress.github.io/data-exploration/responses.html).
+* GitHub repository that contains application code.
 
-* The same form from the homepage should be here as well. Instead of redirecting a user to another page, however, it will perform a search right on the page and display the new results.
+### Application Quality: 15%
 
-## Assets
+* Application user experience is intuitive and easy to navigate.
 
-The following image demonstrates the homepage's appearance and functionality:
+* Application user interface style is clean and polished.
 
-![The home page shows a search bar with the ability to select a format from a dropdown menu.](./Images/01-homepage.png)
+* Application resembles the mock-up functionality provided in the Challenge instructions.
 
-The following image demonstrates the search results page's appearance and functionality:
+### Repository Quality: 13%
 
-![The search results page displays results from a search conducted in the form on the left side of the page.](./Images/02-search-results-page.png)
+* Repository has a unique name.
 
----
+* Repository follows best practices for file structure and naming conventions.
 
-## 💡 Hints
+* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
 
-Will every result have the same data? If not, how will we handle printing it to the page? Can the form design and functionality from the homepage be reused for the search results page?
+* Repository contains multiple descriptive commit messages.
 
-## 🏆 Bonus
+* Repository contains quality readme file with description, screenshot, and link to deployed application.
 
-* How can we build this application using our knowledge in Git collaboration?
+## Review
 
----
+You are required to submit BOTH of the following for review:
+
+* The URL of the functional, deployed application.
+
+* The URL of the GitHub repository. Give the repository a unique name and include a readme describing the project.
+
+- - -
 © 2022 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
