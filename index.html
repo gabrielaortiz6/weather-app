@@ -12,6 +12,7 @@
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <h1>Weather Dashboard</h1>
     </header>
+    <main>
     <div class="container-fluid">
         <div class="row justify-content-start">
             <div class="col-sm-12 col-md-4">
@@ -21,19 +22,15 @@
                     </div>
                     <div class="card-body center">
                         <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" aria-label="Sizing example input" placeholder="Enter city name here" aria-describedby="inputGroup-sizing-lg">
+                            <input type="text" id="city-name-input" class="form-control" aria-label="Sizing example input" placeholder="Enter city name here" aria-describedby="inputGroup-sizing-lg">
                           </div>
                           <div class="d-grid gap-2 mt-4">
-                            <button class="btn btn-primary" type="button">Search</button>
+                            <button class="btn btn-primary" type="button" id="search-btn">Search</button>
                           </div>
                     </div>
                 </div>
-                <div class="list-group mt-4">
-                    <button type="button" class="list-group-item list-group-item-action">A second item</button>
-                    <button type="button" class="list-group-item list-group-item-action">A third button item</button>
-                    <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
-                    <button type="button" class="list-group-item list-group-item-action">A third button item</button>
-                    <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
+                <div class="list-group mt-4 btn-group-vertical" id="search-history">
+                    
                 </div>
             </div>
             
@@ -62,9 +59,8 @@
                       </div>
                   </div>
             </div>
-            
-    <main>
-
     </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="./assets/js/script.js" ></script>
 </body>
 </html>
