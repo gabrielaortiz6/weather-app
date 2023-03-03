@@ -11,27 +11,33 @@ var cityNamesArray = [];
 //I WILL NEED TO CONVERT CITY NAME INTO CITY COORDINATES IN ORDER TO USE THE 5-DAY WEATHER FORECAST
 //IF I CLICK ON THE SEARCH HISTORY LIST, THOSE FEATURES REAPPEAR
 
+function retrieveStorage() {
+
+    //retrieving the array from local storage
+    var storedCities = JSON.parse(localStorage.getItem("cities"));
+
+   //if there is something to retrieve in local storage, make it the value of a variable
+   if (storedCities !== null) {
+    cityNamesArray = storedCities;
+   };
+   console.log(storedCities);
+}
+
+function renderCities() {
+
+    searchHistoryContainer.innerHTML = "";
+
+   //for loop in order to index all the values stored in the array
+   for (var i = 0; i < cityNamesArray.length; i++) {
+    var cityName = cityNamesArray[i];
+    var btn = document.createElement("button");
+    var newBtn = $(btn).addClass('btn btn-secondary').text(cityName);
+    searchHistoryContainer.append(newBtn);
+   };
+};
+
+
 $(document).ready(function() {
-
-    //function to display inputs stored in local storage as buttons
-    function renderCities() {
-
-        //retrieving the array from loal storage
-       var storedCities = JSON.parse(localStorage.getItem("cities"));
-
-       //if there is something to retrieve in local storage, make it the value of a variable
-       if (storedCities !== null) {
-        cityNamesArray = storedCities;
-       };
-       
-       //for loop in order to index all the values stored in the array
-       for (var i = 0; i < cityNamesArray.length; i++) {
-        var cityName = cityNamesArray[i];
-        var btn = document.createElement("button");
-        var newBtn = $(btn).addClass('btn btn-secondary').text(cityName);
-        searchHistoryContainer.append(newBtn);
-       };
-    };
 
 //click event function
 searchBtn.click(function (event) {
@@ -54,30 +60,33 @@ searchBtn.click(function (event) {
         userInput.val("");
 
         //code that AskBCS helped with because my code did not update with new input, but instead would display whole array again
-        var city = document.querySelector('.search-history');
-        while(city.firstChild) {
-        city.removeChild(city.firstChild);
-        }
+        // var city = document.querySelector('.search-history');
+        // while(city.firstChild) {
+        // city.removeChild(city.firstChild);
+        // }
 
         //FUNCTION CONVERTING CITY NAME TO COORDINATES
-        function coordinatesAPI() {
+        // function coordinatesAPI() {
 
-            var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityNamesArray + '&limit=1&appid=' + APIKey;
+        //     var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityNamesArray + '&limit=1&appid=' + APIKey;
 
-            fetch(geoCodeUrl) 
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    console.log(data);
-                    for (var i = 0; i < cityNamesArray.length; i++) {
-                        console.log(data[i].lat);
-                        console.log(data[i].lon);
-                    }
-                });
-        }
+        //     fetch(geoCodeUrl) 
+        //         .then(function (response) {
+        //             return response.json();
+        //         })
+        //         .then(function (data) {
+        //             console.log(data);
+        //             for (var i = 0; i < cityNamesArray.length; i++) {
+        //                 console.log(data[i].lat);
+        //                 console.log(data[i].lon);
+        //             }
+        //         });
+        // }
 
-        renderCities();
-        coordinatesAPI();
+       
+        //function to display inputs stored in local storage as buttons
+        //coordinatesAPI();
 })
+retrieveStorage();
+        renderCities();
 });
