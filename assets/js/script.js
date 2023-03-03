@@ -8,9 +8,12 @@ var cityNamesArray = [];
 //WHEN BUTTON IS CLICKED TO SEARCH CITY THAT WAS INPUT
 //IT IS SAVED TO LOCAL STORAGE AND APPEARS ON THE LIST BELOW AS A BUTTON THAT CAN BE RECLICKED
 //AND IT WILL FETCH API INFORMATION REGARDING THE WEATHER (CITY NAME, DATE, ICON, TEMPERATURE, HUMIDITY, AND WIND SPEED) OF THAT CITY USING A COMBINATION OF 5 DAY WEATHER FORECAST API AND THE OPENWEATHERMAP API
-//IF I CLICK ON THE SEARCH HISTORY LIST, THOSE FUNCTIONALITIES REAPPEAR
+//I WILL NEED TO CONVERT CITY NAME INTO CITY COORDINATES IN ORDER TO USE THE 5-DAY WEATHER FORECAST
+//IF I CLICK ON THE SEARCH HISTORY LIST, THOSE FEATURES REAPPEAR
 
 $(document).ready(function() {
+
+    //function to display inputs stored in local storage as buttons
     function renderCities() {
 
         //retrieving the array from loal storage
@@ -52,10 +55,29 @@ searchBtn.click(function (event) {
 
         //code that AskBCS helped with because my code did not update with new input, but instead would display whole array again
         var city = document.querySelector('.search-history');
-       while(city.firstChild) {
+        while(city.firstChild) {
         city.removeChild(city.firstChild);
         }
 
+        //FUNCTION CONVERTING CITY NAME TO COORDINATES
+        function coordinatesAPI() {
+
+            var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityNamesArray + '&limit=1&appid=' + APIKey;
+
+            fetch(geoCodeUrl) 
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data);
+                    for (var i = 0; i < cityNamesArray.length; i++) {
+                        console.log(data[i].lat);
+                        console.log(data[i].lon);
+                    }
+                });
+        }
+
         renderCities();
+        coordinatesAPI();
 })
 });
