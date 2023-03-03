@@ -28,29 +28,10 @@ $(document).ready(function() {
         searchHistoryContainer.append(newBtn);
        };
     };
-    
+
 //click event function
 searchBtn.click(function (event) {
     event.preventDefault();
-    function renderCities() {
-            //retrieving the array from loal storage
-           var storedCities = JSON.parse(localStorage.getItem("cities"));
-
-           //if there is something to retrieve in local storage, make it the value of a variable
-           if (storedCities !== null) {
-            cityNamesArray = storedCities;
-           };
-
-           console.log(cityNamesArray);
-           
-           //for loop in order to index all the values stored in the array
-           for (var i = 0; i < cityNamesArray.length; i++) {
-            var cityName = cityNamesArray[i];
-            var btn = document.createElement("button");
-            var newBtn = $(btn).addClass('btn btn-secondary').text(cityName);
-            searchHistoryContainer.append(newBtn);
-           }
-        }
 
         var text = userInput.val();
 
