@@ -16,7 +16,6 @@ $(document).ready(function() {
         //retrieving the array from loal storage
        var storedCities = JSON.parse(localStorage.getItem("cities"));
 
-       searchHistoryContainer.innerHTML = "";
        //if there is something to retrieve in local storage, make it the value of a variable
        if (storedCities !== null) {
         cityNamesArray = storedCities;
@@ -37,14 +36,26 @@ searchBtn.click(function (event) {
 
         var text = userInput.val();
 
+        //pushes each input into the empty array that will be used to set storage
         cityNamesArray.push(text);
     
-        if (cityNamesText = "") {
+        //if there is no input, return
+        if (text = "") {
             return;
         }
 
+        //sets local storage with array
         localStorage.setItem("cities", JSON.stringify(cityNamesArray));
+        
+        //empties the user input area after submitting input with click
         userInput.val("");
+
+        //code that AskBCS helped with because my code did not update with new input, but instead would display whole array again
+        var city = document.querySelector('.search-history');
+       while(city.firstChild) {
+        city.removeChild(city.firstChild);
+        }
+
         renderCities();
 })
 });
