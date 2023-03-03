@@ -12,9 +12,11 @@ var cityNamesArray = [];
 
 $(document).ready(function() {
     function renderCities() {
+
         //retrieving the array from loal storage
        var storedCities = JSON.parse(localStorage.getItem("cities"));
 
+       searchHistoryContainer.innerHTML = "";
        //if there is something to retrieve in local storage, make it the value of a variable
        if (storedCities !== null) {
         cityNamesArray = storedCities;
