@@ -22,11 +22,12 @@ function retrieveStorage() {
 };
 
 $(document).ready(function() {
-    retrieveStorage();
     
+    retrieveStorage();
+
     function renderCities() {
         
-        searchHistoryContainer.innerHTML = "";
+        document.querySelector('.search-history').innerHTML = "";
     
        //for loop in order to index all the values stored in the array
        for (var i = 0; i < cityNamesArray.length; i++) {
@@ -57,11 +58,6 @@ searchBtn.click(function (event) {
         userInput.val("");
 
         renderCities();
-        //code that AskBCS helped with because my code did not update with new input, but instead would display whole array again
-        // var city = document.querySelector('.search-history');
-        // while(city.firstChild) {
-        // city.removeChild(city.firstChild);
-        // }
 
         //FUNCTION CONVERTING CITY NAME TO COORDINATES
         // function coordinatesAPI() {
