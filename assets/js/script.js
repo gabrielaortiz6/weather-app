@@ -58,16 +58,12 @@ $(document).ready(function() {
                     console.log(lat);
                     console.log(lon);
                   };
+                  getCurrentWeatherAPI(lat, lon);
             });
     };
 
     //function for current weather api - need to retrieve city name, date, icon of weather conditions, temp, humidity, and wind speed
-    var getCurrentWeatherAPI = function () {
-        
-        var lat = coordinatesAPI(data[i].lat);
-        var lon = coordinatesAPI(data[i].lon);
-        console.log(lat);
-        console.log(lon);
+    var getCurrentWeatherAPI = function (lat, lon) {
 
         var currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey;
         
@@ -77,6 +73,11 @@ $(document).ready(function() {
         })
         .then(function (data) {
             console.log(data);
+                console.log(data.name);
+                console.log(data.weather.icon);
+                console.log(data.main.temp);
+                console.log(data.main.humidity);
+                console.log(data.wind.speed);
         })
     }
 
