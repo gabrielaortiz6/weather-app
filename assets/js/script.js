@@ -47,18 +47,38 @@ $(document).ready(function() {
         fetch(geoCodeUrl) 
             .then(function (response) {
                 if (response.ok) {
-                    console.log(response);
                     return response.json();
                 }
             })
             .then(function (data) {
-                console.log(data);
+                //console.log(data);
                 for (var i = 0; i < data.length; i++) {
-                    console.log(data[i].lat);
-                    console.log(data[i].lon);
+                    var lat = data[i].lat;
+                    var lon = data[i].lon;
+                    console.log(lat);
+                    console.log(lon);
                   };
             });
     };
+
+    //function for current weather api - need to retrieve city name, date, icon of weather conditions, temp, humidity, and wind speed
+    var getCurrentWeatherAPI = function () {
+        
+        var lat = coordinatesAPI(data[i].lat);
+        var lon = coordinatesAPI(data[i].lon);
+        console.log(lat);
+        console.log(lon);
+
+        var currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey;
+        
+        fetch(currentWeatherUrl)
+            .then(function (response) {
+                return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+        })
+    }
 
 //click event function
 searchBtn.click(function (event) {
@@ -72,6 +92,7 @@ searchBtn.click(function (event) {
     //if there is no input, return
     if (text) {
         coordinatesAPI(text);
+        
     } else if (text= "") {
         return;
     }
@@ -83,5 +104,6 @@ searchBtn.click(function (event) {
 
         retrieveStorage();
         renderCities();
+        getCurrentWeatherAPI();
 })
 });
