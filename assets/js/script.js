@@ -10,7 +10,12 @@ var cityNamesArray = [];
 //AND IT WILL FETCH API INFORMATION REGARDING THE WEATHER (CITY NAME, DATE, ICON, TEMPERATURE, HUMIDITY, AND WIND SPEED) OF THAT CITY USING A COMBINATION OF 5 DAY WEATHER FORECAST API AND THE OPENWEATHERMAP API
 //I WILL NEED TO CONVERT CITY NAME INTO CITY COORDINATES IN ORDER TO USE THE 5-DAY WEATHER FORECAST
 //IF I CLICK ON THE SEARCH HISTORY LIST, THOSE FEATURES REAPPEAR
-function retrieveStorage() {
+
+
+
+$(document).ready(function() {
+
+    function retrieveStorage() {
 
     //retrieving the array from local storage
     var storedCities = JSON.parse(localStorage.getItem("cities"));
@@ -19,12 +24,8 @@ function retrieveStorage() {
    if (storedCities !== null) {
     cityNamesArray = storedCities;
    };
-};
-
-$(document).ready(function() {
-    
-    retrieveStorage();
-
+    };
+    //function to display inputs stored in local storage as buttons
     function renderCities() {
         
         document.querySelector('.search-history').innerHTML = "";
@@ -38,6 +39,27 @@ $(document).ready(function() {
        };
     };
 
+//FUNCTION CONVERTING CITY NAME TO COORDINATES
+    var coordinatesAPI = function (city) {
+
+        var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + APIKey;
+
+        fetch(geoCodeUrl) 
+            .then(function (response) {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                }
+            })
+            .then(function (data) {
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i].lat);
+                    console.log(data[i].lon);
+                  };
+            });
+    };
+
 //click event function
 searchBtn.click(function (event) {
     event.preventDefault();
@@ -45,10 +67,12 @@ searchBtn.click(function (event) {
     var text = userInput.val();
 
     //pushes each input into the empty array that will be used to set storage
-    cityNamesArray.push(text);
+      cityNamesArray.push(text);
 
     //if there is no input, return
-    if (text = "") {
+    if (text) {
+        coordinatesAPI(text);
+    } else if (text= "") {
         return;
     }
         //sets local storage with array
@@ -57,28 +81,7 @@ searchBtn.click(function (event) {
         //empties the user input area after submitting input with click
         userInput.val("");
 
+        retrieveStorage();
         renderCities();
-
-        //FUNCTION CONVERTING CITY NAME TO COORDINATES
-        // function coordinatesAPI() {
-
-        //     var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityNamesArray + '&limit=1&appid=' + APIKey;
-
-        //     fetch(geoCodeUrl) 
-        //         .then(function (response) {
-        //             return response.json();
-        //         })
-        //         .then(function (data) {
-        //             console.log(data);
-        //             for (var i = 0; i < cityNamesArray.length; i++) {
-        //                 console.log(data[i].lat);
-        //                 console.log(data[i].lon);
-        //             }
-        //         });
-        // }
-
-       
-        //function to display inputs stored in local storage as buttons
-        //coordinatesAPI();
 })
 });
