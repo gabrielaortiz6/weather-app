@@ -194,7 +194,7 @@ var getFiveDayWeather = function (lat, lon) {
     dayFiveIcon.attr('src', dayFiveIconUrl);
   });
 };
-    //toggle icon and city name and date
+    //toggle icon and city name and date and five day forecast
 
     //make the buttons list click fetch api
 
