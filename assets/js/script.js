@@ -1,6 +1,12 @@
 var APIKey = "1a86d10356127f6c83e94caad377236d";
 var searchBtn = $('#search-btn');
 var searchHistoryContainer = $('.search-history');
+var cityNameEl = $('.city-name');
+var currentDate = $('.current-date');
+var weatherIcon = $('.weather-icon');
+var temp = $('.temperature');
+var wind = $('.wind');
+var humidity = $('.humidity');
 var userInput = $('.city-name-input');
 //variable that is empty array to store inputs into local storagge
 var cityNamesArray = [];
@@ -55,8 +61,6 @@ $(document).ready(function() {
                 for (var i = 0; i < data.length; i++) {
                     var lat = data[i].lat;
                     var lon = data[i].lon;
-                    console.log(lat);
-                    console.log(lon);
                   };
                   getCurrentWeatherAPI(lat, lon);
             });
@@ -65,7 +69,7 @@ $(document).ready(function() {
     //function for current weather api - need to retrieve city name, date, icon of weather conditions, temp, humidity, and wind speed
     var getCurrentWeatherAPI = function (lat, lon) {
 
-        var currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey;
+        var currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&units=imperial';
         
         fetch(currentWeatherUrl)
             .then(function (response) {
@@ -73,12 +77,22 @@ $(document).ready(function() {
         })
         .then(function (data) {
             console.log(data);
-                console.log(data.name);
-                console.log(data.weather.icon);
-                console.log(data.main.temp);
-                console.log(data.main.humidity);
-                console.log(data.wind.speed);
-        })
+                console.log('name: ' + data.name);
+                var iconCode = data.weather[0].icon;
+                var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                console.log('temp: ' + data.main.temp + 'F');
+                console.log('humidity: ' + data.main.humidity + '%');
+                console.log('wind speed: ' + data.wind.speed + 'MPH');
+                cityNameEl.text(data.name);
+                temp.text('Temp: ' + data.main.temp);
+                wind.text('Wind: ' + data.wind.speed);
+                humidity.text('Humidity: ' + data.main.humidity);
+                weatherIcon.attr('src', iconUrl);
+            });
+    };
+
+    var displayCurrentWeather = function () {
+
     }
 
 //click event function
@@ -108,3 +122,17 @@ searchBtn.click(function (event) {
         getCurrentWeatherAPI();
 })
 });
+
+
+// const container = document.getElementById('container');
+// const title = document.createElement('h1');
+// title.textContent = data.title;
+// container.appendChild(title);
+
+// const list = document.createElement('ul');
+// for (const item of data.items) {
+//   const listItem = document.createElement('li');
+//   listItem.textContent = item.name;
+//   list.appendChild(listItem);
+// }
+// container.appendChild(list);
