@@ -2,14 +2,40 @@ var APIKey = "1a86d10356127f6c83e94caad377236d";
 var searchBtn = $('#search-btn');
 var searchHistoryContainer = $('.search-history');
 var cityNameEl = $('.city-name');
-var currentDateEl = $('#current-date');
-var weatherIcon = $('.weather-icon');
-var temp = $('.temperature');
-var wind = $('.wind');
-var humidity = $('.humidity');
 var userInput = $('.city-name-input');
+var currentDateEl = $('.current-date');
+var weatherIcon = $('#weather-icon');
+var temp = $('#temperature');
+var wind = $('#wind');
+var humidity = $('#humidity');
 //variable that is empty array to store inputs into local storagge
 var cityNamesArray = [];
+//forecast variables
+var dayOneTemp = $('#day-one').find('.temp');
+var dayOneWind = $('#day-one').find('.wind');
+var dayOneHumidity = $('#day-one').find('.humidity');
+var dayOneIcon = $('#day-one').find('.weather-icon');
+var dayOneDate = $('#day-one').find('.date');
+var dayTwoTemp = $('#day-two').find('.temp');
+var dayTwoWind = $('#day-two').find('.wind');
+var dayTwoHumidity = $('#day-two').find('.humidity');
+var dayTwoIcon = $('#day-two').find('.weather-icon');
+var dayTwoDate = $('#day-two').find('.date');
+var dayThreeTemp = $('#day-three').find('.temp');
+var dayThreeWind = $('#day-three').find('.wind');
+var dayThreeHumidity = $('#day-three').find('.humidity');
+var dayThreeIcon = $('#day-three').find('.weather-icon');
+var dayThreeDate = $('#day-three').find('.date');
+var dayFourTemp = $('#day-four').find('.temp');
+var dayFourWind = $('#day-four').find('.wind');
+var dayFourHumidity = $('#day-four').find('.humidity');
+var dayFourIcon = $('#day-four').find('.weather-icon');
+var dayFourDate = $('#day-four').find('.date');
+var dayFiveTemp = $('#day-five').find('.temp');
+var dayFiveWind = $('#day-five').find('.wind');
+var dayFiveHumidity = $('#day-five').find('.humidity');
+var dayFiveIcon = $('#day-five').find('.weather-icon');
+var dayFiveDate = $('#day-five').find('.date');
 
 //WHEN BUTTON IS CLICKED TO SEARCH CITY THAT WAS INPUT
 //IT IS SAVED TO LOCAL STORAGE AND APPEARS ON THE LIST BELOW AS A BUTTON THAT CAN BE RECLICKED
@@ -79,7 +105,7 @@ $(document).ready(function () {
                 var iconCode = data.weather[0].icon;
                 cityNameEl.text(data.name);
                 temp.text('Temp: ' + data.main.temp + '°F');
-                wind.text('Wind: ' + data.wind.speed + 'MPH');
+                wind.text('Wind: ' + data.wind.speed + ' MPH');
                 humidity.text('Humidity: ' + data.main.humidity + '%');
 
                 //target icon image url from open weather api
@@ -110,42 +136,62 @@ var getFiveDayWeather = function (lat, lon) {
   .then(function (data) {
     //delete console.logs when finished
     console.log(data);
-    console.log('Day 1:')
     console.log('Unix/UTC: ' + data.list[0].dt);
-    console.log('Temp: ' + data.list[0].main.temp + '°F');
-    console.log(data.list[0].weather.icon);
-    console.log('Wind speed: ' + data.list[0].wind.speed + 'MPH');
-    console.log('Humidity: ' + data.list[0].main.humidity + '%');
-    console.log('----------------');
-    console.log('Day 2:')
-    console.log('Unix/UTC: ' + data.list[1].dt);
-    console.log('Temp: ' + data.list[1].main.temp + '°F');
-    console.log(data.list[1].weather.icon);
-    console.log('Wind speed: ' + data.list[1].wind.speed + 'MPH');
-    console.log('Humidity: ' + data.list[1].main.humidity + '%');
-    console.log('----------------');
-    console.log('Day 3:')
-    console.log('Unix/UTC: ' + data.list[2].dt);
-    console.log('Temp: ' + data.list[2].main.temp + '°F');
-    console.log(data.list[2].weather.icon);
-    console.log('Wind speed: ' + data.list[2].wind.speed + 'MPH');
-    console.log('Humidity: ' + data.list[2].main.humidity + '%');
-    console.log('----------------');
-    console.log('Day 4:')
-    console.log('Unix/UTC: ' + data.list[3].dt);
-    console.log('Temp: ' + data.list[3].main.temp + '°F');
-    console.log(data.list[3].weather.icon);
-    console.log('Wind speed: ' + data.list[3].wind.speed + 'MPH');
-    console.log('Humidity: ' + data.list[3].main.humidity + '%');
-    console.log('----------------');
-    console.log('Day 5:')
-    console.log('Unix/UTC: ' + data.list[4].dt);
-    console.log('Temp: ' + data.list[4].main.temp + '°F');
-    console.log(data.list[4].weather.icon);
-    console.log('Wind speed: ' + data.list[4].wind.speed + 'MPH');
-    console.log('Humidity: ' + data.list[4].main.humidity + '%');
-    console.log('----------------');
+    var dayOneIconCode = data.list[0].weather[0].icon;
+    var dayTwoIconCode = data.list[1].weather[0].icon;
+    var dayThreeIconCode = data.list[2].weather[0].icon;
+    var dayFourIconCode = data.list[3].weather[0].icon;
+    var dayFiveIconCode = data.list[4].weather[0].icon;
+   
+    //current date not working
+    getCurrentDate(data.list[0].dt);
+    dayOneTemp.text('Temp: ' + data.list[1].main.temp + '°F');
+    dayOneWind.text('Wind: ' + data.list[0].wind.speed + 'MPH');
+    dayOneHumidity.text('Humidity: ' + data.list[0].main.humidity + '%');
+    //target icon image url from open weather api
+    var dayOneIconUrl = "http://openweathermap.org/img/wn/" + dayOneIconCode + "@2x.png";
+    //sets attribute of icon element
+    dayOneIcon.attr('src', dayOneIconUrl);
 
+     //current date not working
+    getCurrentDate(data.list[1].dt);
+    dayTwoTemp.text('Temp: ' + data.list[1].main.temp + '°F');
+    dayTwoWind.text('Wind: ' + data.list[1].wind.speed + 'MPH');
+    dayTwoHumidity.text('Humidity: ' + data.list[1].main.humidity + '%');
+    //target icon image url from open weather api
+    var dayTwoIconUrl = "http://openweathermap.org/img/wn/" + dayTwoIconCode + "@2x.png";
+    //sets attribute of icon element
+    dayTwoIcon.attr('src', dayTwoIconUrl);
+
+     //current date not working
+    getCurrentDate(data.list[2].dt);
+    dayThreeTemp.text('Temp: ' + data.list[2].main.temp + '°F');
+    dayThreeWind.text('Wind: ' + data.list[2].wind.speed + 'MPH');
+    dayThreeHumidity.text('Humidity: ' + data.list[2].main.humidity + '%');
+    //target icon image url from open weather api
+    var dayThreeIconUrl = "http://openweathermap.org/img/wn/" + dayThreeIconCode + "@2x.png";
+    //sets attribute of icon element
+    dayThreeIcon.attr('src', dayThreeIconUrl);
+
+     //current date not working
+    getCurrentDate(data.list[3].dt);
+    dayFourTemp.text('Temp: ' + data.list[3].main.temp + '°F');
+    dayFourWind.text('Wind: ' + data.list[3].wind.speed + 'MPH');
+    dayFourHumidity.text('Humidity: ' + data.list[3].main.humidity + '%');
+    //target icon image url from open weather api
+    var dayFourIconUrl = "http://openweathermap.org/img/wn/" + dayFourIconCode + "@2x.png";
+    //sets attribute of icon element
+    dayFourIcon.attr('src', dayFourIconUrl);
+
+     //current date not working
+    getCurrentDate(data.list[4].dt);
+    dayFiveTemp.text('Temp: ' + data.list[4].main.temp + '°F');
+    dayFiveWind.text('Wind: ' + data.list[4].wind.speed + 'MPH');
+    dayFiveHumidity.text('Humidity: ' + data.list[4].main.humidity + '%');
+    //target icon image url from open weather api
+    var dayFiveIconUrl = "http://openweathermap.org/img/wn/" + dayFiveIconCode + "@2x.png";
+    //sets attribute of icon element
+    dayFiveIcon.attr('src', dayFiveIconUrl);
   });
 };
     //toggle icon and city name and date
