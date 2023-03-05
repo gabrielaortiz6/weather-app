@@ -57,8 +57,6 @@ $(document).ready(function () {
                 }
             })
             .then(function (data) {
-                //delete console.log
-                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     var lat = data[i].lat;
                     var lon = data[i].lon;
@@ -78,7 +76,6 @@ $(document).ready(function () {
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
                 var iconCode = data.weather[0].icon;
                 cityNameEl.text(data.name);
                 temp.text('Temp: ' + data.main.temp + '°F');
@@ -101,19 +98,54 @@ $(document).ready(function () {
         currentDateEl.text(date);
     };
 
-
-
-    //do the five day weather forecast fetch and handling
+    //five day weather fetch - retrieves date, icon, temp, humidity, and wind speed
 var getFiveDayWeather = function (lat, lon) {
 
-    var forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&units=imperial';
+    var forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&cnt=5&units=imperial';
 
     fetch(forecastUrl)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
+    //delete console.logs when finished
     console.log(data);
+    console.log('Day 1:')
+    console.log('Unix/UTC: ' + data.list[0].dt);
+    console.log('Temp: ' + data.list[0].main.temp + '°F');
+    console.log(data.list[0].weather.icon);
+    console.log('Wind speed: ' + data.list[0].wind.speed + 'MPH');
+    console.log('Humidity: ' + data.list[0].main.humidity + '%');
+    console.log('----------------');
+    console.log('Day 2:')
+    console.log('Unix/UTC: ' + data.list[1].dt);
+    console.log('Temp: ' + data.list[1].main.temp + '°F');
+    console.log(data.list[1].weather.icon);
+    console.log('Wind speed: ' + data.list[1].wind.speed + 'MPH');
+    console.log('Humidity: ' + data.list[1].main.humidity + '%');
+    console.log('----------------');
+    console.log('Day 3:')
+    console.log('Unix/UTC: ' + data.list[2].dt);
+    console.log('Temp: ' + data.list[2].main.temp + '°F');
+    console.log(data.list[2].weather.icon);
+    console.log('Wind speed: ' + data.list[2].wind.speed + 'MPH');
+    console.log('Humidity: ' + data.list[2].main.humidity + '%');
+    console.log('----------------');
+    console.log('Day 4:')
+    console.log('Unix/UTC: ' + data.list[3].dt);
+    console.log('Temp: ' + data.list[3].main.temp + '°F');
+    console.log(data.list[3].weather.icon);
+    console.log('Wind speed: ' + data.list[3].wind.speed + 'MPH');
+    console.log('Humidity: ' + data.list[3].main.humidity + '%');
+    console.log('----------------');
+    console.log('Day 5:')
+    console.log('Unix/UTC: ' + data.list[4].dt);
+    console.log('Temp: ' + data.list[4].main.temp + '°F');
+    console.log(data.list[4].weather.icon);
+    console.log('Wind speed: ' + data.list[4].wind.speed + 'MPH');
+    console.log('Humidity: ' + data.list[4].main.humidity + '%');
+    console.log('----------------');
+
   });
 };
     //toggle icon and city name and date
