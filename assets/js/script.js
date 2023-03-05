@@ -2,7 +2,7 @@ var APIKey = "1a86d10356127f6c83e94caad377236d";
 var searchBtn = $('#search-btn');
 var searchHistoryContainer = $('.search-history');
 var cityNameEl = $('.city-name');
-var currentDate = $('.current-date');
+var currentDateEl = $('#current-date');
 var weatherIcon = $('.weather-icon');
 var temp = $('.temperature');
 var wind = $('.wind');
@@ -64,6 +64,7 @@ $(document).ready(function () {
                     var lon = data[i].lon;
                 };
                 getCurrentWeatherAPI(lat, lon);
+                getFiveDayWeather(lat,lon);
             });
     };
 
@@ -78,26 +79,46 @@ $(document).ready(function () {
             })
             .then(function (data) {
                 console.log(data);
-                console.log('name: ' + data.name);
                 var iconCode = data.weather[0].icon;
-                var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
-                //dete console.logs
-                console.log('temp: ' + data.main.temp + 'F');
-                console.log('humidity: ' + data.main.humidity + '%');
-                console.log('wind speed: ' + data.wind.speed + 'MPH');
                 cityNameEl.text(data.name);
                 temp.text('Temp: ' + data.main.temp + '°F');
                 wind.text('Wind: ' + data.wind.speed + 'MPH');
                 humidity.text('Humidity: ' + data.main.humidity + '%');
+
+                //target icon image url from open weather api
+                var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
                 weatherIcon.attr('src', iconUrl);
+
+                //calls getCurrentDate dayjs() function and filters the unix timestamp from open weather as parameter
+               getCurrentDate(data.dt);
             });
     };
 
-    //get current date using day js with the utc provided from open weather api
+    //get current date using day js with the unix timestamp provided by open weather api
+    var getCurrentDate = function (unix) {
+        var date = dayjs.unix(unix).format('MM/DD/YYYY');
+        
+        currentDateEl.text(date);
+    };
+
+
 
     //do the five day weather forecast fetch and handling
+var getFiveDayWeather = function (lat, lon) {
 
+    var forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&units=imperial';
+
+    fetch(forecastUrl)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data);
+  });
+};
     //toggle icon and city name and date
+
+    //make the buttons list click fetch api
 
     //click event function
     searchBtn.click(function (event) {
@@ -123,6 +144,5 @@ $(document).ready(function () {
 
         retrieveStorage();
         renderCities();
-        getCurrentWeatherAPI();
     })
 });
