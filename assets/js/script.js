@@ -15,27 +15,27 @@ var dayOneTemp = $('#day-one').find('.temp');
 var dayOneWind = $('#day-one').find('.wind');
 var dayOneHumidity = $('#day-one').find('.humidity');
 var dayOneIcon = $('#day-one').find('.weather-icon');
-var dayOneDate = $('#day-one').find('.date');
+var dayOneDateEl = $('#day-one').find('.current-date');
 var dayTwoTemp = $('#day-two').find('.temp');
 var dayTwoWind = $('#day-two').find('.wind');
 var dayTwoHumidity = $('#day-two').find('.humidity');
 var dayTwoIcon = $('#day-two').find('.weather-icon');
-var dayTwoDate = $('#day-two').find('.date');
+var dayTwoDateEl = $('#day-two').find('.current-date');
 var dayThreeTemp = $('#day-three').find('.temp');
 var dayThreeWind = $('#day-three').find('.wind');
 var dayThreeHumidity = $('#day-three').find('.humidity');
 var dayThreeIcon = $('#day-three').find('.weather-icon');
-var dayThreeDate = $('#day-three').find('.date');
+var dayThreeDateEl = $('#day-three').find('.current-date');
 var dayFourTemp = $('#day-four').find('.temp');
 var dayFourWind = $('#day-four').find('.wind');
 var dayFourHumidity = $('#day-four').find('.humidity');
 var dayFourIcon = $('#day-four').find('.weather-icon');
-var dayFourDate = $('#day-four').find('.date');
+var dayFourDateEl = $('#day-four').find('.current-date');
 var dayFiveTemp = $('#day-five').find('.temp');
 var dayFiveWind = $('#day-five').find('.wind');
 var dayFiveHumidity = $('#day-five').find('.humidity');
 var dayFiveIcon = $('#day-five').find('.weather-icon');
-var dayFiveDate = $('#day-five').find('.date');
+var dayFiveDateEl = $('#day-five').find('.current-date');
 
 //WHEN BUTTON IS CLICKED TO SEARCH CITY THAT WAS INPUT
 //IT IS SAVED TO LOCAL STORAGE AND APPEARS ON THE LIST BELOW AS A BUTTON THAT CAN BE RECLICKED
@@ -46,6 +46,7 @@ var dayFiveDate = $('#day-five').find('.date');
 
 $(document).ready(function () {
 
+    //function for retrieving user input from storage
     function retrieveStorage() {
 
         //retrieving the array from local storage
@@ -56,7 +57,8 @@ $(document).ready(function () {
             cityNamesArray = storedCities;
         };
     };
-    //function to display inputs stored in local storage as buttons
+
+    //function that creates buttons out of the stored user inputs
     function renderCitiesHistory() {
 
         document.querySelector('.search-history').innerHTML = "";
@@ -70,14 +72,17 @@ $(document).ready(function () {
         };
     };
 
-    //FUNCTION CONVERTING CITY NAME TO COORDINATES
+    //Function converting user input (city name) into coordinates so it is usable for the other API fetchs
     var coordinatesAPI = function (city) {
 
         var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + APIKey;
 
         fetch(geoCodeUrl)
             .then(function (response) {
-                if (response.ok) {
+                if (response.status != 200) {
+                    window.alert("Error!")
+                }
+                else if (response.ok) {
                     return response.json();
                 }
             })
@@ -85,20 +90,21 @@ $(document).ready(function () {
                 for (var i = 0; i < data.length; i++) {
                     var lat = data[i].lat;
                     var lon = data[i].lon;
-                };
+                }
                 getCurrentWeatherAPI(lat, lon);
                 getFiveDayWeather(lat, lon);
             });
-    };
-
+    }
     //function for current weather api - retrieves city name, date, icon, temp, humidity, and wind speed
     var getCurrentWeatherAPI = function (lat, lon) {
 
         var currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&units=imperial';
 
         fetch(currentWeatherUrl)
-            .then(function (response) {
+        .then(function (response) {
+            if (response.ok) {
                 return response.json();
+            }
             })
             .then(function (data) {
                 var iconCode = data.weather[0].icon;
@@ -129,21 +135,32 @@ $(document).ready(function () {
         var forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&cnt=5&units=imperial';
 
         fetch(forecastUrl)
-            .then(function (response) {
+        .then(function (response) {
+            if (response.status != 200) {
+                window.alert("Error! Please enter a valid city")
+            }
+            else if (response.ok) {
                 return response.json();
-            })
+            }
+        })
             .then(function (data) {
                 //delete console.logs when finished
                 console.log(data);
-                console.log('Unix/UTC: ' + data.list[0].dt);
+                var dateDayOne = data.list[0].dt_txt;
+                var dateDayTwo = data.list[1].dt_txt;
+                var dateDayThree = data.list[2].dt_txt;
+                var dateDayFour = data.list[3].dt_txt;
+                console.log(dateDayThree);
+                var dateDayFive = data.list[4].dt_txt;
                 var dayOneIconCode = data.list[0].weather[0].icon;
                 var dayTwoIconCode = data.list[1].weather[0].icon;
                 var dayThreeIconCode = data.list[2].weather[0].icon;
                 var dayFourIconCode = data.list[3].weather[0].icon;
                 var dayFiveIconCode = data.list[4].weather[0].icon;
 
-                //current date not working
-                getCurrentDate(data.list[0].dt);
+                //reformat date
+                var reformatDate1 = dayjs(dateDayOne).format('MM/DD/YYYY');
+                dayOneDateEl.text(reformatDate1);
                 dayOneTemp.text('Temp: ' + data.list[1].main.temp + '°F');
                 dayOneWind.text('Wind: ' + data.list[0].wind.speed + 'MPH');
                 dayOneHumidity.text('Humidity: ' + data.list[0].main.humidity + '%');
@@ -152,8 +169,9 @@ $(document).ready(function () {
                 //sets attribute of icon element
                 dayOneIcon.attr('src', dayOneIconUrl);
 
-                //current date not working
-                getCurrentDate(data.list[1].dt);
+                //repeated for Day 2 of Forecast
+                var reformatDate2 = dayjs(dateDayTwo).format('MM/DD/YYYY');
+                dayTwoDateEl.text(reformatDate2);
                 dayTwoTemp.text('Temp: ' + data.list[1].main.temp + '°F');
                 dayTwoWind.text('Wind: ' + data.list[1].wind.speed + 'MPH');
                 dayTwoHumidity.text('Humidity: ' + data.list[1].main.humidity + '%');
@@ -162,8 +180,9 @@ $(document).ready(function () {
                 //sets attribute of icon element
                 dayTwoIcon.attr('src', dayTwoIconUrl);
 
-                //current date not working
-                getCurrentDate(data.list[2].dt);
+                //repeated for Day 3
+                var reformatDate3 = dayjs(dateDayThree).format('MM/DD/YYYY');
+                dayThreeDateEl.text(reformatDate3);
                 dayThreeTemp.text('Temp: ' + data.list[2].main.temp + '°F');
                 dayThreeWind.text('Wind: ' + data.list[2].wind.speed + 'MPH');
                 dayThreeHumidity.text('Humidity: ' + data.list[2].main.humidity + '%');
@@ -172,8 +191,9 @@ $(document).ready(function () {
                 //sets attribute of icon element
                 dayThreeIcon.attr('src', dayThreeIconUrl);
 
-                //current date not working
-                getCurrentDate(data.list[3].dt);
+                //repeat for Day Four
+                var reformatDate4 = dayjs(dateDayFour).format('MM/DD/YYYY');
+                dayFourDateEl.text(reformatDate4);
                 dayFourTemp.text('Temp: ' + data.list[3].main.temp + '°F');
                 dayFourWind.text('Wind: ' + data.list[3].wind.speed + 'MPH');
                 dayFourHumidity.text('Humidity: ' + data.list[3].main.humidity + '%');
@@ -182,8 +202,9 @@ $(document).ready(function () {
                 //sets attribute of icon element
                 dayFourIcon.attr('src', dayFourIconUrl);
 
-                //current date not working
-                getCurrentDate(data.list[4].dt);
+                //repeat for Day Five
+                var reformatDate5 = dayjs(dateDayFive).format('MM/DD/YYYY');
+                dayFiveDateEl.text(reformatDate5);
                 dayFiveTemp.text('Temp: ' + data.list[4].main.temp + '°F');
                 dayFiveWind.text('Wind: ' + data.list[4].wind.speed + 'MPH');
                 dayFiveHumidity.text('Humidity: ' + data.list[4].main.humidity + '%');
@@ -201,7 +222,7 @@ $(document).ready(function () {
         document.querySelector('.toggle-content').style.display = 'block';
     }
 
-    //function to dis
+    //function to display user's input, set storage, and retrieve storage
     // $('.btn').on('click', function (event) {
     function display(event) {
         event.preventDefault();
@@ -211,7 +232,7 @@ $(document).ready(function () {
         //pushes each input into the empty array that will be used to set storage
         cityNamesArray.push(text);
 
-        //if there is no input, return
+        //if there is no input, return and use text (user's input) as parameter for the coordinatesAPI function, which changes the city name into coordinates that can be used for the other APIs
         if (text) {
             coordinatesAPI(text);
 
@@ -224,6 +245,7 @@ $(document).ready(function () {
         //empties the user input area after submitting input with click
         userInput.val("");
 
+        //calls the function that creates the buttons out of user input and retrieves storage
         renderCitiesHistory();
         retrieveStorage();
     };
