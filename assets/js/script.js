@@ -1,5 +1,5 @@
 var APIKey = "1a86d10356127f6c83e94caad377236d";
-var btn = $('.btn');
+var searchBtn = $('.search-btn');
 var searchHistoryContainer = $('.search-history');
 var cityNameEl = $('.city-name');
 var userInput = $('.city-name-input');
@@ -37,19 +37,13 @@ var dayFiveHumidity = $('#day-five').find('.humidity');
 var dayFiveIcon = $('#day-five').find('.weather-icon');
 var dayFiveDateEl = $('#day-five').find('.current-date');
 
-//WHEN BUTTON IS CLICKED TO SEARCH CITY THAT WAS INPUT
-//IT IS SAVED TO LOCAL STORAGE AND APPEARS ON THE LIST BELOW AS A BUTTON THAT CAN BE RECLICKED
-//AND IT WILL FETCH API INFORMATION REGARDING THE WEATHER (CITY NAME, DATE, ICON, TEMPERATURE, HUMIDITY, AND WIND SPEED) OF THAT CITY USING A COMBINATION OF 5 DAY WEATHER FORECAST API AND THE OPENWEATHERMAP API
-//I WILL NEED TO CONVERT CITY NAME INTO CITY COORDINATES IN ORDER TO USE THE 5-DAY WEATHER FORECAST
-//IF I CLICK ON THE SEARCH HISTORY LIST, THOSE FEATURES REAPPEAR
-
+//ONLY ISSUE LEFT IS DATES
 
 $(document).ready(function () {
 
     //function for retrieving user input from storage
     function retrieveStorage() {
 
-        //retrieving the array from local storage
         var storedCities = JSON.parse(localStorage.getItem("cities"));
 
         //if there is something to retrieve in local storage, make it the value of a variable
@@ -70,6 +64,8 @@ $(document).ready(function () {
             var newBtn = $(btn).addClass('btn btn-secondary search-btn mb-4').text(cityName);
             searchHistoryContainer.append(newBtn);
         };
+
+        //click event so it pulls API Data when clicked -- ASKBCS helped
         $('.btn-secondary').on('click', function(event) {
             event.preventDefault();
             var cityName = $(this).text();
@@ -99,8 +95,9 @@ $(document).ready(function () {
                 }
                 getCurrentWeatherAPI(lat, lon);
                 getFiveDayWeather(lat, lon);
-            });
-    }
+            })
+    };
+
     //function for current weather api - retrieves city name, date, icon, temp, humidity, and wind speed
     var getCurrentWeatherAPI = function (lat, lon) {
 
@@ -138,7 +135,7 @@ $(document).ready(function () {
     //five day weather fetch - retrieves date, icon, temp, humidity, and wind speed
     var getFiveDayWeather = function (lat, lon) {
 
-        var forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&cnt=5&units=imperial';
+        var forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + APIKey + '&cnt=29&units=imperial';
 
         fetch(forecastUrl)
         .then(function (response) {
@@ -149,25 +146,30 @@ $(document).ready(function () {
                 return response.json();
             }
         })
+        //day two is actually index 4
+        //day three is actually index 12
+        //day four is actually index 20
+        //day five is actually index 28
             .then(function (data) {
-                //delete console.logs when finished
+                //declaring dates in forecast as variables
                 console.log(data);
                 var dateDayOne = data.list[0].dt_txt;
-                var dateDayTwo = data.list[1].dt_txt;
-                var dateDayThree = data.list[2].dt_txt;
-                var dateDayFour = data.list[3].dt_txt;
-                console.log(dateDayThree);
-                var dateDayFive = data.list[4].dt_txt;
+                var dateDayTwo = data.list[4].dt_txt;
+                var dateDayThree = data.list[12].dt_txt;
+                var dateDayFour = data.list[20].dt_txt;
+                var dateDayFive = data.list[28].dt_txt;
+
+                //declaring icon codes of forecast as variables
                 var dayOneIconCode = data.list[0].weather[0].icon;
-                var dayTwoIconCode = data.list[1].weather[0].icon;
-                var dayThreeIconCode = data.list[2].weather[0].icon;
-                var dayFourIconCode = data.list[3].weather[0].icon;
-                var dayFiveIconCode = data.list[4].weather[0].icon;
+                var dayTwoIconCode = data.list[4].weather[0].icon;
+                var dayThreeIconCode = data.list[12].weather[0].icon;
+                var dayFourIconCode = data.list[20].weather[0].icon;
+                var dayFiveIconCode = data.list[28].weather[0].icon;
 
                 //reformat date
                 var reformatDate1 = dayjs(dateDayOne).format('MM/DD/YYYY');
                 dayOneDateEl.text(reformatDate1);
-                dayOneTemp.text('Temp: ' + data.list[1].main.temp + '°F');
+                dayOneTemp.text('Temp: ' + data.list[0].main.temp + '°F');
                 dayOneWind.text('Wind: ' + data.list[0].wind.speed + 'MPH');
                 dayOneHumidity.text('Humidity: ' + data.list[0].main.humidity + '%');
                 //target icon image url from open weather api
@@ -178,9 +180,9 @@ $(document).ready(function () {
                 //repeated for Day 2 of Forecast
                 var reformatDate2 = dayjs(dateDayTwo).format('MM/DD/YYYY');
                 dayTwoDateEl.text(reformatDate2);
-                dayTwoTemp.text('Temp: ' + data.list[1].main.temp + '°F');
-                dayTwoWind.text('Wind: ' + data.list[1].wind.speed + 'MPH');
-                dayTwoHumidity.text('Humidity: ' + data.list[1].main.humidity + '%');
+                dayTwoTemp.text('Temp: ' + data.list[4].main.temp + '°F');
+                dayTwoWind.text('Wind: ' + data.list[4].wind.speed + 'MPH');
+                dayTwoHumidity.text('Humidity: ' + data.list[4].main.humidity + '%');
                 //target icon image url from open weather api
                 var dayTwoIconUrl = "http://openweathermap.org/img/wn/" + dayTwoIconCode + "@2x.png";
                 //sets attribute of icon element
@@ -189,9 +191,9 @@ $(document).ready(function () {
                 //repeated for Day 3
                 var reformatDate3 = dayjs(dateDayThree).format('MM/DD/YYYY');
                 dayThreeDateEl.text(reformatDate3);
-                dayThreeTemp.text('Temp: ' + data.list[2].main.temp + '°F');
-                dayThreeWind.text('Wind: ' + data.list[2].wind.speed + 'MPH');
-                dayThreeHumidity.text('Humidity: ' + data.list[2].main.humidity + '%');
+                dayThreeTemp.text('Temp: ' + data.list[12].main.temp + '°F');
+                dayThreeWind.text('Wind: ' + data.list[12].wind.speed + 'MPH');
+                dayThreeHumidity.text('Humidity: ' + data.list[12].main.humidity + '%');
                 //target icon image url from open weather api
                 var dayThreeIconUrl = "http://openweathermap.org/img/wn/" + dayThreeIconCode + "@2x.png";
                 //sets attribute of icon element
@@ -200,9 +202,9 @@ $(document).ready(function () {
                 //repeat for Day Four
                 var reformatDate4 = dayjs(dateDayFour).format('MM/DD/YYYY');
                 dayFourDateEl.text(reformatDate4);
-                dayFourTemp.text('Temp: ' + data.list[3].main.temp + '°F');
-                dayFourWind.text('Wind: ' + data.list[3].wind.speed + 'MPH');
-                dayFourHumidity.text('Humidity: ' + data.list[3].main.humidity + '%');
+                dayFourTemp.text('Temp: ' + data.list[20].main.temp + '°F');
+                dayFourWind.text('Wind: ' + data.list[20].wind.speed + 'MPH');
+                dayFourHumidity.text('Humidity: ' + data.list[20].main.humidity + '%');
                 //target icon image url from open weather api
                 var dayFourIconUrl = "http://openweathermap.org/img/wn/" + dayFourIconCode + "@2x.png";
                 //sets attribute of icon element
@@ -211,9 +213,9 @@ $(document).ready(function () {
                 //repeat for Day Five
                 var reformatDate5 = dayjs(dateDayFive).format('MM/DD/YYYY');
                 dayFiveDateEl.text(reformatDate5);
-                dayFiveTemp.text('Temp: ' + data.list[4].main.temp + '°F');
-                dayFiveWind.text('Wind: ' + data.list[4].wind.speed + 'MPH');
-                dayFiveHumidity.text('Humidity: ' + data.list[4].main.humidity + '%');
+                dayFiveTemp.text('Temp: ' + data.list[28].main.temp + '°F');
+                dayFiveWind.text('Wind: ' + data.list[28].wind.speed + 'MPH');
+                dayFiveHumidity.text('Humidity: ' + data.list[28].main.humidity + '%');
                 //target icon image url from open weather api
                 var dayFiveIconUrl = "http://openweathermap.org/img/wn/" + dayFiveIconCode + "@2x.png";
                 //sets attribute of icon element
@@ -221,15 +223,12 @@ $(document).ready(function () {
             });
     };
 
-    //make the buttons list click fetch api
-
     //toggle icon and city name and date and five day forecast
     function toggle() {
         document.querySelector('.toggle-content').style.display = 'block';
     }
 
     //function to display user's input, set storage, and retrieve storage
-    // $('.btn').on('click', function (event) {
     function display(event) {
         event.preventDefault();
 
@@ -256,6 +255,6 @@ $(document).ready(function () {
         retrieveStorage();
     };
       //click events
-    $('.btn').on('click', toggle);
-    $('.btn').on('click', display);
+    searchBtn.on('click', toggle);
+    searchBtn.on('click', display);
 });
