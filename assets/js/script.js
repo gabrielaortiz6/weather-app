@@ -105,10 +105,14 @@ $(document).ready(function () {
 
         fetch(currentWeatherUrl)
         .then(function (response) {
-            if (response.ok) {
+            if (response.status != 200) {
+                window.alert("Error! Please enter a valid city")
+                return
+            }
+            else if (response.ok) {
                 return response.json();
             }
-            })
+        })
             .then(function (data) {
                 var iconCode = data.weather[0].icon;
                 cityNameEl.text(data.name);
@@ -141,15 +145,12 @@ $(document).ready(function () {
         .then(function (response) {
             if (response.status != 200) {
                 window.alert("Error! Please enter a valid city")
+                return
             }
             else if (response.ok) {
                 return response.json();
             }
         })
-        //day two is actually index 4
-        //day three is actually index 12
-        //day four is actually index 20
-        //day five is actually index 28
             .then(function (data) {
                 //declaring dates in forecast as variables
                 console.log(data);
@@ -234,16 +235,18 @@ $(document).ready(function () {
 
         var text = userInput.val();
 
-        //pushes each input into the empty array that will be used to set storage
-        cityNamesArray.push(text);
-
         //if there is no input, return and use text (user's input) as parameter for the coordinatesAPI function, which changes the city name into coordinates that can be used for the other APIs
         if (text) {
             coordinatesAPI(text);
 
-        } else if (text = "") {
+        } else if (!text || text == " ") {
+            window.alert("Error! Please enter a city name");
             return;
         }
+
+        //pushes each input into the empty array that will be used to set storage
+        cityNamesArray.push(text);
+
         //sets local storage with array
         localStorage.setItem("cities", JSON.stringify(cityNamesArray));
 

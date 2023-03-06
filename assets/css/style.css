@@ -1,3 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* add google font*/
+}
+
+header {
+color: white;
+background: linear-gradient(90deg, rgba(40,15,93,1) 0%, rgba(85,95,223,1) 100%);
+padding: 3rem;
+font-weight: 750;
+margin-bottom: 4rem;
+}
+
+h4 {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.btn-secondary {
+    padding: .5rem;
+    border-radius: 5px;
+    font-size: 22px;
+    font-weight: 500;
+    color: white;
+    background-color: #6c6d71;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.search-input-card,
+.city-name-input,
+.search-btn {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.search-btn {
+    font-size: 18px;
+}
+
+.card-text {
+    font-size: 20px;
+}
+
+.forecast-subheading {
+    margin-bottom: 15px;
+}
+
 .display-inline {
     display: inline;
 }
@@ -6,6 +53,8 @@
     display: none;
 }
 
-/* toggle display
-
-/* add styling
+#subheading h3,
+.forecast-heading {
+    font-size: 32px;
+    font-weight: 600;
+}
