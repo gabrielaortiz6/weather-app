@@ -1,5 +1,6 @@
 var APIKey = "1a86d10356127f6c83e94caad377236d";
-var searchBtn = $('.btn');
+var btn = $('.btn');
+var toggleContent = $('.toggle-content');
 var searchHistoryContainer = $('.search-history');
 var cityNameEl = $('.city-name');
 var userInput = $('.city-name-input');
@@ -194,10 +195,15 @@ var getFiveDayWeather = function (lat, lon) {
   });
 };
     //toggle icon and city name and date and five day forecast
-
+    function toggle () {
+        if (toggleContent.style.display == 'none') {
+    toggleContent.style.display = 'block';
+  } 
+}
     //make the buttons list click fetch api
     //click event function
-    $('.btn').on('click', function (event) {
+   // $('.btn').on('click', function (event) {
+        function display (event) {
         event.preventDefault();
 
         var text = userInput.val();
@@ -220,6 +226,7 @@ var getFiveDayWeather = function (lat, lon) {
 
         renderCities();
         retrieveStorage();
-        return;
-    })
+    };
+    $('.btn').on('click', display);
+    $('.search-btn').on('click', toggle);
 });

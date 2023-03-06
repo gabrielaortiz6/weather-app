@@ -1,5 +1,11 @@
 .display-inline {
     display: inline;
 }
+
+.toggle-content {
+    display: none;
+}
+
 /* toggle display
+
 /* add styling
