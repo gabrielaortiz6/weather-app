@@ -1,5 +1,5 @@
 var APIKey = "1a86d10356127f6c83e94caad377236d";
-var searchBtn = $('#search-btn');
+var searchBtn = $('.btn');
 var searchHistoryContainer = $('.search-history');
 var cityNameEl = $('.city-name');
 var userInput = $('.city-name-input');
@@ -44,7 +44,6 @@ var dayFiveDate = $('#day-five').find('.date');
 //IF I CLICK ON THE SEARCH HISTORY LIST, THOSE FEATURES REAPPEAR
 
 
-
 $(document).ready(function () {
 
     function retrieveStorage() {
@@ -66,7 +65,7 @@ $(document).ready(function () {
         for (var i = 0; i < cityNamesArray.length; i++) {
             var cityName = cityNamesArray[i];
             var btn = document.createElement("button");
-            var newBtn = $(btn).addClass('btn btn-secondary').text(cityName);
+            var newBtn = $(btn).addClass('btn btn-secondary search-btn mb-4').text(cityName);
             searchHistoryContainer.append(newBtn);
         };
     };
@@ -197,9 +196,8 @@ var getFiveDayWeather = function (lat, lon) {
     //toggle icon and city name and date and five day forecast
 
     //make the buttons list click fetch api
-
     //click event function
-    searchBtn.click(function (event) {
+    $('.btn').on('click', function (event) {
         event.preventDefault();
 
         var text = userInput.val();
@@ -220,7 +218,8 @@ var getFiveDayWeather = function (lat, lon) {
         //empties the user input area after submitting input with click
         userInput.val("");
 
-        retrieveStorage();
         renderCities();
+        retrieveStorage();
+        return;
     })
 });
