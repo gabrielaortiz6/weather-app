@@ -57,7 +57,7 @@ $(document).ready(function () {
         };
     };
     //function to display inputs stored in local storage as buttons
-    function renderCities() {
+    function renderCitiesHistory() {
 
         document.querySelector('.search-history').innerHTML = "";
 
@@ -201,7 +201,7 @@ $(document).ready(function () {
         document.querySelector('.toggle-content').style.display = 'block';
     }
 
-    //click event function
+    //function to dis
     // $('.btn').on('click', function (event) {
     function display(event) {
         event.preventDefault();
@@ -224,9 +224,10 @@ $(document).ready(function () {
         //empties the user input area after submitting input with click
         userInput.val("");
 
-        renderCities();
+        renderCitiesHistory();
         retrieveStorage();
     };
+      //click events
     $('.btn').on('click', toggle);
     $('.btn').on('click', display);
 });
