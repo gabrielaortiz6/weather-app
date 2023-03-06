@@ -70,6 +70,12 @@ $(document).ready(function () {
             var newBtn = $(btn).addClass('btn btn-secondary search-btn mb-4').text(cityName);
             searchHistoryContainer.append(newBtn);
         };
+        $('.btn-secondary').on('click', function(event) {
+            event.preventDefault();
+            var cityName = $(this).text();
+            coordinatesAPI(cityName);
+            toggle();
+        })
     };
 
     //Function converting user input (city name) into coordinates so it is usable for the other API fetchs
