@@ -6,10 +6,10 @@
 
 header {
 color: white;
-background: linear-gradient(90deg, rgba(40,15,93,1) 0%, rgba(85,95,223,1) 100%);
-padding: 3rem;
+background: linear-gradient(90deg, rgba(40,15,93,1) 0%, rgba(85,122,223,1) 100%);
+padding: 1.5rem;
 font-weight: 750;
-margin-bottom: 4rem;
+margin-bottom: 2rem;
 }
 
 h4 {
@@ -27,6 +27,14 @@ h4 {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.padding-right {
+    padding-right: 2rem;
+}
+
+.padding {
+    padding-left: 1rem;
+}
+
 .search-input-card,
 .city-name-input,
 .search-btn {
@@ -37,12 +45,18 @@ h4 {
     font-size: 18px;
 }
 
-.card-text {
-    font-size: 20px;
+.card-title {
+    font-size:20px;
 }
 
-.forecast-subheading {
-    margin-bottom: 15px;
+.card-text {
+    font-size: 16px;
+}
+
+#five-day-forecast .card {
+    background-color: #262b39;
+    color: white;
+    margin-right: 1rem;
 }
 
 .display-inline {

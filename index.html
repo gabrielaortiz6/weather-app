@@ -19,16 +19,16 @@
   </header>
   <main>
     <div class="container-fluid">
-      <div class="row justify-content-start">
-        <div class="col-sm-12 col-md-4">
+      <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-3 padding-right">
           <div class="card search-input-card">
             <div class="card-header">
               <h2>Search for a City:</h2>
             </div>
             <div class="card-body center">
               <div class="input-group input-group-lg">
-                <input type="text" required class="form-control city-name-input"
-                  placeholder="Miami" aria-describedby="inputGroup-sizing-lg">
+                <input type="text" required class="form-control city-name-input" placeholder="Miami"
+                  aria-describedby="inputGroup-sizing-lg">
               </div>
               <div class="d-grid gap-2 mt-4">
                 <button class="btn btn-primary search-btn" type="button">Search</button>
@@ -40,9 +40,9 @@
           </div>
         </div>
         <!--Display for Current Weather-->
-        <div class="toggle-content col-sm-12 col-md-8 col-8">
-          <div class="card" style="width: 85%">
-            <div class="card-body pb-4 mb-3">
+        <div class="toggle-content col-sm-12 col-md-8 col-8 padding">
+          <div class="card pl-2 mr-1" style="width: 100%">
+            <div class="card-body mb-2">
               <div id="subheading">
                 <h3 class="card-title city-name display-inline"></h3>
                 <h3 class="display-inline current-date"></h3>
@@ -57,42 +57,59 @@
             </div>
           </div>
           <!--Display Five Day Forecast-->
-          <div class="row forecast" id="five-day-forecast">
-            <h3 class="mt-5 mb-5">5-Day Forecast: </h3>
-            <div class="col" id="day-one">
-              <h4 class="current-date"></h4>
-              <img class="weather-icon" src="" width="50px" height="50px" src="" alt="Weather icon">
-              <p class="card-text temp"></p>
-              <p class="card-text wind"></p>
-              <p class="card-text humidity"></p>
+          <div class="forecast container padding ml-0" style="width: 100%" id="five-day-forecast">
+            <h3 class="mt-5 mb-4">5-Day Forecast: </h3>
+            <div class="row row-cols-5">
+              <div class="card" style="width: 11rem">
+                <div class="col forecast-days card-body" id="day-one">
+                  <h4 class="current-date card-title"></h4>
+                  <img class="weather-icon" src="" width="50px" height="50px" src="" alt="Weather icon">
+                  <p class="card-text temp"></p>
+                  <p class="card-text wind"></p>
+                  <p class="card-text humidity"></p>
+                </div>
+              </div>
+
+              <div class="card" style="width: 11rem">
+                <div class="col forecast-days card-body" id="day-two">
+                  <h4 class="current-date card-title"></h4>
+                  <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
+                  <p class="card-text temp"></p>
+                  <p class="card-text wind"></p>
+                  <p class="card-text humidity"></p>
+                </div>
+              </div>
+
+              <div class="card" style="width: 11rem">
+                <div class="col forecast-days card-body" id="day-three">
+                  <h4 class="current-date card-title"></h4>
+                  <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
+                  <p class="card-text temp"></p>
+                  <p class="card-text wind"></p>
+                  <p class="card-text humidity"></p>
+                </div>
+              </div>
+
+              <div class="card" style="width: 11rem">
+                <div class="col forecast-days card-body" id="day-four">
+                  <h4 class="current-date card-title"></h4>
+                  <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
+                  <p class="card-text temp"></p>
+                  <p class="card-text wind"></p>
+                  <p class="card-text humidity"></p>
+                </div>
+              </div>
+
+              <div class="card" style="width: 11rem">
+                <div class="col forecast-days card-body" id="day-five">
+                  <h4 class="current-date card-title"></h4>
+                  <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
+                  <p class="card-text temp"></p>
+                  <p class="card-text wind"></p>
+                  <p class="card-text humidity"></p>
+                </div>
+              </div>
             </div>
-            <div class="col" id="day-two">
-              <h4 class="current-date"></h4>
-              <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
-              <p class="card-text temp"></p>
-              <p class="card-text wind"></p>
-              <p class="card-text humidity"></p>
-            </div>
-            <div class="col" id="day-three">
-              <h4 class="current-date"></h4>
-              <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
-              <p class="card-text temp"></p>
-              <p class="card-text wind"></p>
-              <p class="card-text humidity"></p>
-            </div>
-            <div class="col" id="day-four">
-              <h4 class="current-date"></h4>
-              <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
-              <p class="card-text temp"></p>
-              <p class="card-text wind"></p>
-              <p class="card-text humidity"></p>
-            </div>
-            <div class="col" id="day-five">
-              <h4 class="current-date"></h4>
-              <img class="weather-icon" width="50px" height="50px" src="" alt="Weather icon">
-              <p class="card-text temp"></p>
-              <p class="card-text wind"></p>
-              <p class="card-text humidity"></p>
             </div>
           </div>
         </div>
