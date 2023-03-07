@@ -172,7 +172,7 @@ $(document).ready(function () {
                 dayOneWind.text('Wind: ' + data.list[0].wind.speed + 'MPH');
                 dayOneHumidity.text('Humidity: ' + data.list[0].main.humidity + '%');
                 //target icon image url from open weather api
-                var dayOneIconUrl = "http://openweathermap.org/img/wn/" + dayOneIconCode + "@2x.png";
+                var dayOneIconUrl = "https://openweathermap.org/img/wn/" + dayOneIconCode + "@2x.png";
                 //sets attribute of icon element
                 dayOneIcon.attr('src', dayOneIconUrl);
 
@@ -183,7 +183,7 @@ $(document).ready(function () {
                 dayTwoWind.text('Wind: ' + data.list[5].wind.speed + 'MPH');
                 dayTwoHumidity.text('Humidity: ' + data.list[5].main.humidity + '%');
                 //target icon image url from open weather api
-                var dayTwoIconUrl = "http://openweathermap.org/img/wn/" + dayTwoIconCode + "@2x.png";
+                var dayTwoIconUrl = "https://openweathermap.org/img/wn/" + dayTwoIconCode + "@2x.png";
                 //sets attribute of icon element
                 dayTwoIcon.attr('src', dayTwoIconUrl);
 
@@ -194,7 +194,7 @@ $(document).ready(function () {
                 dayThreeWind.text('Wind: ' + data.list[14].wind.speed + 'MPH');
                 dayThreeHumidity.text('Humidity: ' + data.list[13].main.humidity + '%');
                 //target icon image url from open weather api
-                var dayThreeIconUrl = "http://openweathermap.org/img/wn/" + dayThreeIconCode + "@2x.png";
+                var dayThreeIconUrl = "https://openweathermap.org/img/wn/" + dayThreeIconCode + "@2x.png";
                 //sets attribute of icon element
                 dayThreeIcon.attr('src', dayThreeIconUrl);
 
@@ -205,7 +205,7 @@ $(document).ready(function () {
                 dayFourWind.text('Wind: ' + data.list[23].wind.speed + 'MPH');
                 dayFourHumidity.text('Humidity: ' + data.list[23].main.humidity + '%');
                 //target icon image url from open weather api
-                var dayFourIconUrl = "http://openweathermap.org/img/wn/" + dayFourIconCode + "@2x.png";
+                var dayFourIconUrl = "https://openweathermap.org/img/wn/" + dayFourIconCode + "@2x.png";
                 //sets attribute of icon element
                 dayFourIcon.attr('src', dayFourIconUrl);
 
@@ -216,7 +216,7 @@ $(document).ready(function () {
                 dayFiveWind.text('Wind: ' + data.list[30].wind.speed + 'MPH');
                 dayFiveHumidity.text('Humidity: ' + data.list[30].main.humidity + '%');
                 //target icon image url from open weather api
-                var dayFiveIconUrl = "http://openweathermap.org/img/wn/" + dayFiveIconCode + "@2x.png";
+                var dayFiveIconUrl = "https://openweathermap.org/img/wn/" + dayFiveIconCode + "@2x.png";
                 //sets attribute of icon element
                 dayFiveIcon.attr('src', dayFiveIconUrl);
             });
