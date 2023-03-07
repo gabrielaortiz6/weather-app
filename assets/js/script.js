@@ -75,7 +75,7 @@ $(document).ready(function () {
     //Function converting user input (city name) into coordinates so it is usable for the other API fetchs
     var coordinatesAPI = function (city) {
 
-        var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + APIKey;
+        var geoCodeUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + APIKey;
 
         fetch(geoCodeUrl)
             .then(function (response) {
